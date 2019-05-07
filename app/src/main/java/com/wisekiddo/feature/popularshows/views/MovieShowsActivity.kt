@@ -15,6 +15,8 @@ package com.wisekiddo.feature.popularshows.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,7 @@ import com.wisekiddo.R
 import com.wisekiddo.application.ProjectApplication
 import com.wisekiddo.feature.base.BaseAdapter
 import com.wisekiddo.feature.popularshows.presenter.MovieShowsPresenter
+import com.wisekiddo.feature.showdetails.views.ShowDetailsActivity
 import com.wisekiddo.models.MovieShows
 import com.wisekiddo.widgets.loaders.CurvesLoader
 import javax.inject.Inject
@@ -37,6 +40,7 @@ class MovieShowsActivity : MvpActivity<MovieShowsPresenter.View, MovieShowsPrese
 
     private lateinit var adapter: BaseAdapter
     private lateinit var clickedItemView: View
+    private lateinit var toolbar: Toolbar
 
     @Inject
     lateinit var movieShowsPresenter: MovieShowsPresenter
@@ -52,6 +56,7 @@ class MovieShowsActivity : MvpActivity<MovieShowsPresenter.View, MovieShowsPrese
     private fun initViews() {
         recyclerView = findViewById(R.id.rv_shows_list)
         progressIndicator = findViewById(R.id.progress_bar)
+        toolbar = findViewById(R.id.toolbar)
 
         adapter = BaseAdapter(this, R.layout.popular_show_list_item)
         recyclerView.adapter = adapter
@@ -79,7 +84,7 @@ class MovieShowsActivity : MvpActivity<MovieShowsPresenter.View, MovieShowsPrese
         return movieShowsPresenter
     }
 
-    override fun onTvShowClicked(movieShows: MovieShows, itemView: View) {
+    override fun onMovieShowClicked(movieShows: MovieShows, itemView: View) {
         this.clickedItemView = itemView
         getPresenter().onMovieShowClicked(movieShows)
     }
@@ -108,11 +113,12 @@ class MovieShowsActivity : MvpActivity<MovieShowsPresenter.View, MovieShowsPrese
         //Snackbar.make(findViewById(R.id.parent_container), errorMessage, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun openTvShowDetailScreen(movieShows: MovieShows) {
+    override fun openMovieShowDetailScreen(movieShows: MovieShows) {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this)
         startActivity(intent, options.toBundle())
-        //val intent = ShowDetailsActivity.getMyIntent(this, movieShows)
-        //ActivityCompat.startActivity(this, intent, options.toBundle())
-        //overridePendingTransition(0, 0);
+
+        val intent = ShowDetailsActivity.getMyIntent(this, movieShows)
+        ActivityCompat.startActivity(this, intent, options.toBundle())
+        overridePendingTransition(0, 0)
     }
 }

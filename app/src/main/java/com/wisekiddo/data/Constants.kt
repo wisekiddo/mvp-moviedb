@@ -36,8 +36,6 @@ object Constants {
 
     object ImageSize {
         const val W500 = "w500"
-        const val W780 = "w780"
-        const val W1280 = "w1280"
         const val ORIGINAL = "original"
     }
 

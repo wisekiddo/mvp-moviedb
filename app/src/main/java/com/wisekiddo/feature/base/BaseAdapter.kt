@@ -14,6 +14,7 @@
 package com.wisekiddo.feature.base
 
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,9 +26,16 @@ import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.wisekiddo.R
 import com.wisekiddo.data.Constants
 import com.wisekiddo.models.MovieShows
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 
 class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowLayout: Int) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -60,7 +68,9 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
     fun showFooter() {
         if (!isFooterVisible) {
             isFooterVisible = true
-            notifyItemInserted(itemCount - 1)
+
+                notifyItemInserted(itemCount - 1)
+
         }
     }
 
@@ -82,7 +92,7 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
 
 
     interface Listener {
-        fun onTvShowClicked(movieShows: MovieShows, itemView: View)
+        fun onMovieShowClicked(movieShows: MovieShows, itemView: View)
     }
 
 
@@ -90,54 +100,101 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
         return when (viewType) {
             ITEMS -> {
                 val view = LayoutInflater.from(parent!!.context).inflate(tvShowLayout, parent, false)
-                TvShowsViewHolder(view)
+                MovieShowsViewHolder(view)
             }
             FOOTER -> {
-                val footerLayout = R.layout.progressbar_curves
+
+                var footerLayout = R.layout.progressbar_curves_small
+
+                if (!isVertical)
+                    footerLayout = R.layout.progressbar_curves_small
+
 
 
                 val view = LayoutInflater.from(parent!!.context).inflate(footerLayout, parent, false)
                 ProgressFooterViewHolder(view)
+
             }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(tvShowLayout, parent, false)
-                TvShowsViewHolder(view)
+                MovieShowsViewHolder(view)
             }
         }
     }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is TvShowsViewHolder) {
+        if (holder is MovieShowsViewHolder) {
             holder.bind(showsList[position])
         }
     }
 
 
-    inner class TvShowsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MovieShowsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
-        var tvShowContainer: ViewGroup = view.findViewById(R.id.tvshow_container)
+        var tvShowContainer: ViewGroup = view.findViewById(R.id.movieshow_container)
         var coverImageView: ImageView = view.findViewById(R.id.iv_cover)
-        var titleTv: TextView = view.findViewById(R.id.tv_title)
-        var starRatingTv: TextView = view.findViewById(R.id.tv_star_rating)
-        var descTv: TextView = view.findViewById(R.id.tv_desc)
+        var tvTitle: TextView = view.findViewById(R.id.tv_title)
+        var tvRatingStar: TextView = view.findViewById(R.id.tv_star_rating)
+        var tvDescription: TextView? = view.findViewById(R.id.tv_desc)
+        var tvReleaseDate: TextView? = view.findViewById(R.id.tv_release_date)
+        var progressBar: ViewGroup = view.findViewById(R.id.progress_bar)
 
         fun bind(movieShows: MovieShows) {
             Glide.with(coverImageView)
-                .load(Constants.BASE_URL_IMAGE + Constants.ImageSize.W500 + movieShows.posterPath)
+                .load(Constants.BASE_URL_IMAGE + Constants.ImageSize.ORIGINAL + movieShows.posterPath)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                })
                 .into(coverImageView)
 
-            titleTv.text = movieShows.name
-            descTv?.text = movieShows.overview
-            starRatingTv.text = movieShows.voteAverage.toString()
-            //yearTv?.text = movieShows.firstAirDate?.split("-")?.get(0)
 
-            tvShowContainer.setOnClickListener { listener.onTvShowClicked(movieShows, itemView) }
+
+            val simpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
+            val date = simpleDateFormat.parse(movieShows.releaseDate)
+            val strDate = simpleDateFormat.format(date)
+
+            if(tvReleaseDate!=null)
+                tvReleaseDate!!.text = "Release Date: " + strDate
+            if(tvDescription!=null)
+                tvDescription!!.text = movieShows.overview
+
+            tvTitle.text = movieShows.name
+
+            tvRatingStar.text = movieShows.voteAverage.toString() + itemView.resources.getString(R.string.overall_rating)
+
+
+            tvShowContainer.setOnClickListener { listener.onMovieShowClicked(movieShows, itemView) }
         }
 
 
     }
 
-    inner class ProgressFooterViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    inner class ProgressFooterViewHolder(view: View) : RecyclerView.ViewHolder(view){
+
+
+        fun bind(movieShows: MovieShows){
+            //progressBar.visibility = View.GONE
+        }
+    }
 }

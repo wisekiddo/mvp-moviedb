@@ -18,6 +18,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/transparent"
         tools:context="com.wisekiddo.feature.popularshows.views.MovieShowsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,25 +28,13 @@
             android:background="@color/colorPrimary"
             android:elevation="3dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/app_name"/>
+            app:title="@string/now_playing_shows"/>
 
 
     <include
             layout="@layout/progressbar_curves"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-    <TextView
-            android:id="@+id/tv_popular_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/now_playing_shows"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -56,9 +45,10 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/popular_show_list_item"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_popular_label"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

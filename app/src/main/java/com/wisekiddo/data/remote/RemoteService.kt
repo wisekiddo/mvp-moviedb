@@ -24,13 +24,13 @@ import retrofit2.http.Query
 interface RemoteService {
 
     @GET(Constants.ApiEndpoint.NOW_PLAYING)
-    fun getPopularTvShows(@Query(Constants.QueryParams.PAGE) page: Int = 1,
-                          @Query(Constants.QueryParams.API_KEY)
+    fun getMovieShows(@Query(Constants.QueryParams.PAGE) page: Int = 1,
+                      @Query(Constants.QueryParams.API_KEY)
                           apiKey: String = Constants.API_KEY
     ): Flowable<PaginatedResponse<MovieShows>>
 
     @GET(Constants.ApiEndpoint.SIMILAR_MOVIE)
-    fun getSimilarTvShows(
+    fun getSimilarMovieShows(
         @Path(Constants.PathParams.MOVIE_ID) tvShowId: Int,
         @Query(Constants.QueryParams.PAGE) page: Int = 1,
         @Query(Constants.QueryParams.API_KEY)

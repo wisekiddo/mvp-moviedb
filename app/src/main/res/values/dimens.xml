@@ -16,8 +16,8 @@
 
     <dimen name="layout_padding">16dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
-    <dimen name="elevation">3dp</dimen>
-    <dimen name="corner_radius">3dp</dimen>
+    <dimen name="elevation">4dp</dimen>
+    <dimen name="corner_radius">4dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
 
 </resources>

@@ -14,8 +14,11 @@
 <resources>
     <string name="app_name">Movie DB</string>
     <string name="action_settings">Settings</string>
+    <string name="similar_shows">Similar Movies</string>
 
     <string name="now_playing_shows">Now Playing</string>
     <string name="dummy_text_rating">9.0</string>
     <string name="special_char_star">★</string>
+    <string name="none">none</string>
+    <string name="overall_rating">/10</string>
 </resources>

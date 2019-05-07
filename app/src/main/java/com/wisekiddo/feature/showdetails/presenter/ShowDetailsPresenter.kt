@@ -25,38 +25,38 @@ import io.reactivex.schedulers.Schedulers
 
 class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePresenter<ShowDetailsPresenter.View>() {
 
-    private var tvShowId: Int = 0
+    private var movieShowId: Int = 0
     private var currentPage = 0
     private var pageAvailable = 1
     private var isLoading = false
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun init(movieShows: MovieShows) {
-        tvShowId = movieShows.id!!
+        movieShowId = movieShows.id!!
         ifViewAttached { it.showProgress() }
-        getSimilarTvShows()
+        getSimilarMovieShows()
     }
 
     fun getMoreSimilarShows() {
         ifViewAttached { it.showFooterLoader() }
-        getSimilarTvShows()
+        getSimilarMovieShows()
     }
 
-    private fun getSimilarTvShows() {
+    private fun getSimilarMovieShows() {
         if (currentPage < pageAvailable && !isLoading) {
             isLoading = true
 
-            val disposable = remoteService.getSimilarTvShows(tvShowId, currentPage + 1)
+            val disposable = remoteService.getSimilarMovieShows(movieShowId, currentPage + 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response -> onGetSimilarTvShowsSuccess(response) },
-                    { e -> onGetSimilarTvShowsFailure(e) })
+                .subscribe({ response -> onGetSimilarMovieShowsSuccess(response) },
+                    { e -> onGetSimilarShowsFailure(e) })
 
             compositeDisposable.add(disposable)
         }
     }
 
-    private fun onGetSimilarTvShowsSuccess(response: PaginatedResponse<MovieShows>?) {
+    private fun onGetSimilarMovieShowsSuccess(response: PaginatedResponse<MovieShows>?) {
         currentPage = response!!.page
         pageAvailable = response.totalPages
 
@@ -64,11 +64,11 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         ifViewAttached {
             it.hideProgress()
             it.hideFooterLoader()
-            it.addSimilarTvShows(response.results)
+            it.addSimilarMovieShows(response.results)
         }
     }
 
-    private fun onGetSimilarTvShowsFailure(e: Throwable?) {
+    private fun onGetSimilarShowsFailure(e: Throwable?) {
         isLoading = false
         ifViewAttached {
             it.hideProgress()
@@ -78,8 +78,8 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         }
     }
 
-    fun onTvShowClicked(movieShows: MovieShows) {
-        ifViewAttached { it.openTvShowDetailScreen(movieShows) }
+    fun onMovieShowClicked(movieShows: MovieShows) {
+        ifViewAttached { it.openMovieShowDetailScreen(movieShows) }
     }
 
     override fun detachView() {
@@ -97,8 +97,8 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         fun hideProgress()
         fun showFooterLoader()
         fun hideFooterLoader()
-        fun addSimilarTvShows(similarMovieShows: List<MovieShows>)
-        fun openTvShowDetailScreen(movieShows: MovieShows)
+        fun addSimilarMovieShows(similarMovieShows: List<MovieShows>)
+        fun openMovieShowDetailScreen(movieShows: MovieShows)
         fun showError(errorMessage: String)
     }
 }

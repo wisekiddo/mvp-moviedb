@@ -38,7 +38,9 @@ class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePre
     }
 
     fun getMoreMovieShows() {
-        ifViewAttached { it.showFooterLoader() }
+        ifViewAttached {
+            it.showFooterLoader()
+        }
         getMovieShows()
     }
 
@@ -46,17 +48,17 @@ class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePre
         if (currentPage < pageAvailable && !isLoading) {
             isLoading = true
 
-            val disposable = remoteService.getPopularTvShows(page = currentPage + 1)
+            val disposable = remoteService.getMovieShows(page = currentPage + 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response -> onGetPopularTvShowsSuccess(response) },
-                    { e -> onGetPopularTvShowsFailure(e) })
+                .subscribe({ response -> onGetMovieShowsSuccess(response) },
+                    { e -> onGetMovieShowsFailure(e) })
 
             compositeDisposable.add(disposable)
         }
     }
 
-    private fun onGetPopularTvShowsFailure(e: Throwable?) {
+    private fun onGetMovieShowsFailure(e: Throwable?) {
         isLoading = false
         ifViewAttached {
             it.hideFooterLoader()
@@ -66,7 +68,7 @@ class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePre
         }
     }
 
-    private fun onGetPopularTvShowsSuccess(response: PaginatedResponse<MovieShows>) {
+    private fun onGetMovieShowsSuccess(response: PaginatedResponse<MovieShows>) {
         currentPage = response.page
         pageAvailable = response.totalPages
         isLoading = false
@@ -79,7 +81,9 @@ class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePre
     }
 
     fun onMovieShowClicked(movieShows: MovieShows) {
-        ifViewAttached { it.openTvShowDetailScreen(movieShows) }
+        ifViewAttached {
+            it.openMovieShowDetailScreen(movieShows)
+        }
     }
 
     override fun detachView() {
@@ -99,6 +103,6 @@ class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePre
         fun hideFooterLoader()
         fun addItems(movieShows: List<MovieShows>)
         fun showError(errorMessage: String)
-        fun openTvShowDetailScreen(movieShows: MovieShows)
+        fun openMovieShowDetailScreen(movieShows: MovieShows)
     }
 }

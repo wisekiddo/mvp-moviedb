@@ -19,6 +19,8 @@ apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
 
 android {
+
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.wisekiddo"

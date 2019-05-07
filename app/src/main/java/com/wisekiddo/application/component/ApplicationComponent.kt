@@ -16,6 +16,7 @@ package com.wisekiddo.application.component
 import com.wisekiddo.application.module.NetworkModule
 import com.wisekiddo.application.module.PresentersModule
 import com.wisekiddo.feature.popularshows.views.MovieShowsActivity
+import com.wisekiddo.feature.showdetails.views.ShowDetailsActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -24,6 +25,5 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
     fun inject(activity: MovieShowsActivity)
-    //TODO:  Create the show details
-    //fun inject(activity: ShowDetailsActivity)
+    fun inject(activity: ShowDetailsActivity)
 }
