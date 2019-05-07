@@ -67,10 +67,8 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
 
     fun showFooter() {
         if (!isFooterVisible) {
+            //notifyItemInserted(itemCount - 1)
             isFooterVisible = true
-
-                notifyItemInserted(itemCount - 1)
-
         }
     }
 
@@ -138,7 +136,7 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
         var tvRatingStar: TextView = view.findViewById(R.id.tv_star_rating)
         var tvDescription: TextView? = view.findViewById(R.id.tv_desc)
         var tvReleaseDate: TextView? = view.findViewById(R.id.tv_release_date)
-        var progressBar: ViewGroup = view.findViewById(R.id.progress_bar)
+        var progressBar: ViewGroup? = view.findViewById(R.id.progress_bar)
 
         fun bind(movieShows: MovieShows) {
             Glide.with(coverImageView)
@@ -150,7 +148,7 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        progressBar.visibility = View.GONE
+                        progressBar?.visibility = View.GONE
                         return false
                     }
 
@@ -161,7 +159,7 @@ class BaseAdapter(private var listener: Listener, @LayoutRes private val tvShowL
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        progressBar.visibility = View.GONE
+                        progressBar?.visibility = View.GONE
                         return false
                     }
 
