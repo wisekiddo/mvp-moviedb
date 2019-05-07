@@ -11,20 +11,20 @@
  * limitations under the License.
  */
 
-package com.wisekiddo.application.module
+package com.wisekiddo.widgets;
 
+import org.junit.Test;
 
-import com.wisekiddo.data.remote.RemoteService
-import com.wisekiddo.feature.popularshows.presenter.MovieShowsPresenter
-import com.wisekiddo.feature.showdetails.presenter.ShowDetailsPresenter
-import dagger.Module
-import dagger.Provides
+import static org.junit.Assert.*;
 
-@Module(includes = [NetworkModule::class])
-class PresentersModule {
-    @Provides
-    fun getHomePresenter(remoteService: RemoteService) = MovieShowsPresenter(remoteService)
-
-    @Provides
-    fun getShowDetailPresenter(remoteService: RemoteService) = ShowDetailsPresenter(remoteService)
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
+    }
 }

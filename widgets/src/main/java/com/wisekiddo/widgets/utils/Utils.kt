@@ -11,20 +11,23 @@
  * limitations under the License.
  */
 
-package com.wisekiddo.application.module
+package com.wisekiddo.widgets.utils
+
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 
 
-import com.wisekiddo.data.remote.RemoteService
-import com.wisekiddo.feature.popularshows.presenter.MovieShowsPresenter
-import com.wisekiddo.feature.showdetails.presenter.ShowDetailsPresenter
-import dagger.Module
-import dagger.Provides
+object Utils {
 
-@Module(includes = [NetworkModule::class])
-class PresentersModule {
-    @Provides
-    fun getHomePresenter(remoteService: RemoteService) = MovieShowsPresenter(remoteService)
+    fun scanForActivity(context: Context?): Activity? {
+        return when (context) {
+            null -> null
+            is Activity -> context
+            is ContextWrapper -> scanForActivity(context.baseContext)
+            else -> null
+        }
 
-    @Provides
-    fun getShowDetailPresenter(remoteService: RemoteService) = ShowDetailsPresenter(remoteService)
+    }
+
 }

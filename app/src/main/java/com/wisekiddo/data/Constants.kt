@@ -20,8 +20,8 @@ object Constants {
     const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/"
 
     object ApiEndpoint {
-        const val POPULAR_TV = "tv/popular"
-        const val SIMILAR_TV = "tv/{" + PathParams.TV_SHOW_ID + "}/similar"
+        const val NOW_PLAYING = "movie/now_playing"
+        const val SIMILAR_MOVIE = "movie/{" + PathParams.MOVIE_ID + "}/similar"
     }
 
     object QueryParams {
@@ -31,7 +31,7 @@ object Constants {
     }
 
     object PathParams {
-        const val TV_SHOW_ID = "tv_id"
+        const val MOVIE_ID = "movie_id"
     }
 
     object ImageSize {

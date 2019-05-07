@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2019 Wisekiddo by Ronald Garcia Bernardo. All rights reserved.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <declare-styleable name="CurvesLoader">
+        <attr name="curves_noOfCurves" format="integer"/>
+        <attr name="curves_outermostCurveRadius" format="dimension"/>
+        <attr name="curves_curveWidth" format="dimension"/>
+        <attr name="curves_distanceBetweenCurves" format="dimension"/>
+        <attr name="curves_curveSweepAngle" format="float"/>
+        <attr name="curves_curveColor" format="color"/>
+        <attr name="curves_animDuration" format="integer"/>
+        <attr name="curves_interpolator" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ArcView">
+        <attr name="arcRadius" format="dimension"/>
+        <attr name="arcWidth" format="dimension"/>
+        <attr name="startAngle" format="float"/>
+        <attr name="sweepAngle" format="float"/>
+        <attr name="arcColor" format="color"/>
+        <attr name="drawOnlyStroke" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="cornerRadius" format="dimension"/>
+        <attr name="roundedCorners">
+            <flag name="topLeft" value="8"/>
+            <flag name="topRight" value="4"/>
+            <flag name="bottomLeft" value="2"/>
+            <flag name="bottomRight" value="1"/>
+            <flag name="top" value="12"/>
+            <flag name="bottom" value="3"/>
+            <flag name="all" value="15"/>
+        </attr>
+    </declare-styleable>
+</resources>

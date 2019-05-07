@@ -17,8 +17,8 @@ import android.util.Log
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.wisekiddo.data.remote.RemoteService
+import com.wisekiddo.models.MovieShows
 import com.wisekiddo.models.PaginatedResponse
-import com.wisekiddo.models.TvShow
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -31,8 +31,8 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
     private var isLoading = false
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun init(tvShow: TvShow) {
-        tvShowId = tvShow.id!!
+    fun init(movieShows: MovieShows) {
+        tvShowId = movieShows.id!!
         ifViewAttached { it.showProgress() }
         getSimilarTvShows()
     }
@@ -56,7 +56,7 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         }
     }
 
-    private fun onGetSimilarTvShowsSuccess(response: PaginatedResponse<TvShow>?) {
+    private fun onGetSimilarTvShowsSuccess(response: PaginatedResponse<MovieShows>?) {
         currentPage = response!!.page
         pageAvailable = response.totalPages
 
@@ -78,8 +78,8 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         }
     }
 
-    fun onTvShowClicked(tvShow: TvShow) {
-        ifViewAttached { it.openTvShowDetailScreen(tvShow) }
+    fun onTvShowClicked(movieShows: MovieShows) {
+        ifViewAttached { it.openTvShowDetailScreen(movieShows) }
     }
 
     override fun detachView() {
@@ -97,8 +97,8 @@ class ShowDetailsPresenter(private var remoteService: RemoteService) : MvpBasePr
         fun hideProgress()
         fun showFooterLoader()
         fun hideFooterLoader()
-        fun addSimilarTvShows(similarTvShows: List<TvShow>)
-        fun openTvShowDetailScreen(tvShow: TvShow)
+        fun addSimilarTvShows(similarMovieShows: List<MovieShows>)
+        fun openTvShowDetailScreen(movieShows: MovieShows)
         fun showError(errorMessage: String)
     }
 }

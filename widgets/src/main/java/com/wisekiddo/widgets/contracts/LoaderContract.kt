@@ -11,20 +11,10 @@
  * limitations under the License.
  */
 
-package com.wisekiddo.application.module
+package com.wisekiddo.widgets.contracts
 
+import android.util.AttributeSet
 
-import com.wisekiddo.data.remote.RemoteService
-import com.wisekiddo.feature.popularshows.presenter.MovieShowsPresenter
-import com.wisekiddo.feature.showdetails.presenter.ShowDetailsPresenter
-import dagger.Module
-import dagger.Provides
-
-@Module(includes = [NetworkModule::class])
-class PresentersModule {
-    @Provides
-    fun getHomePresenter(remoteService: RemoteService) = MovieShowsPresenter(remoteService)
-
-    @Provides
-    fun getShowDetailPresenter(remoteService: RemoteService) = ShowDetailsPresenter(remoteService)
+interface LoaderContract {
+    fun initAttributes(attrs: AttributeSet)
 }

@@ -17,25 +17,26 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-class TvShow : Serializable {
-    @SerializedName("original_name")
-    var originalName: String? = null
+class MovieShows : Serializable {
+
+    @SerializedName("original_title")
+    val originalTitle: String? = null
+    @SerializedName("title")
+    val name: String? = null
     @SerializedName("genre_ids")
     var genreIds: List<Int>? = null
-    @SerializedName("name")
-    var name: String? = null
+    @SerializedName("adult")
+    val adult: Boolean? = null
     @SerializedName("popularity")
     var popularity: Double? = null
-    @SerializedName("origin_country")
-    var originCountry: List<String>? = null
+    @SerializedName("original_language")
+    var originalLanguage: String? = null
     @SerializedName("vote_count")
     var voteCount: Int? = null
     @SerializedName("first_air_date")
     var firstAirDate: String? = null
     @SerializedName("backdrop_path")
     var backdropPath: String? = null
-    @SerializedName("original_language")
-    var originalLanguage: String? = null
     @SerializedName("id")
     var id: Int? = null
     @SerializedName("vote_average")
@@ -44,4 +45,27 @@ class TvShow : Serializable {
     var overview: String? = null
     @SerializedName("poster_path")
     var posterPath: String? = null
+    @SerializedName("release_date")
+    val releaseDate: String? = null
+    @SerializedName("video")
+    val video: Boolean? = null
+
 }
+
+
+data class Result(
+    val adult: Boolean,
+    val backdrop_path: String,
+    val genre_ids: List<Int>,
+    val id: Int,
+    val original_language: String,
+    val original_title: String,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val release_date: String,
+    val title: String,
+    val video: Boolean,
+    val vote_average: Double,
+    val vote_count: Int
+)

@@ -17,13 +17,13 @@ import android.util.Log
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.wisekiddo.data.remote.RemoteService
+import com.wisekiddo.models.MovieShows
 import com.wisekiddo.models.PaginatedResponse
-import com.wisekiddo.models.TvShow
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class PopularShowsPresenter(private var remoteService: RemoteService) : MvpBasePresenter<PopularShowsPresenter.View>() {
+class MovieShowsPresenter(private var remoteService: RemoteService) : MvpBasePresenter<MovieShowsPresenter.View>() {
 
     private var currentPage = 0
     private var pageAvailable = 1
@@ -34,15 +34,15 @@ class PopularShowsPresenter(private var remoteService: RemoteService) : MvpBaseP
         ifViewAttached {
             it.showFullscreenProgress()
         }
-        getPopularTvShows()
+        getMovieShows()
     }
 
-    fun getMoreTvShows() {
+    fun getMoreMovieShows() {
         ifViewAttached { it.showFooterLoader() }
-        getPopularTvShows()
+        getMovieShows()
     }
 
-    private fun getPopularTvShows() {
+    private fun getMovieShows() {
         if (currentPage < pageAvailable && !isLoading) {
             isLoading = true
 
@@ -66,7 +66,7 @@ class PopularShowsPresenter(private var remoteService: RemoteService) : MvpBaseP
         }
     }
 
-    private fun onGetPopularTvShowsSuccess(response: PaginatedResponse<TvShow>) {
+    private fun onGetPopularTvShowsSuccess(response: PaginatedResponse<MovieShows>) {
         currentPage = response.page
         pageAvailable = response.totalPages
         isLoading = false
@@ -78,8 +78,8 @@ class PopularShowsPresenter(private var remoteService: RemoteService) : MvpBaseP
         }
     }
 
-    fun onTvShowClicked(tvShow: TvShow) {
-        ifViewAttached { it.openTvShowDetailScreen(tvShow) }
+    fun onMovieShowClicked(movieShows: MovieShows) {
+        ifViewAttached { it.openTvShowDetailScreen(movieShows) }
     }
 
     override fun detachView() {
@@ -97,8 +97,8 @@ class PopularShowsPresenter(private var remoteService: RemoteService) : MvpBaseP
         fun hideFullscreenProgress()
         fun showFooterLoader()
         fun hideFooterLoader()
-        fun addItems(tvShows: List<TvShow>)
+        fun addItems(movieShows: List<MovieShows>)
         fun showError(errorMessage: String)
-        fun openTvShowDetailScreen(tvShow: TvShow)
+        fun openTvShowDetailScreen(movieShows: MovieShows)
     }
 }

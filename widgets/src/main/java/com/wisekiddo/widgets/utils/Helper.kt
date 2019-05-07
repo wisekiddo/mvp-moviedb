@@ -11,20 +11,23 @@
  * limitations under the License.
  */
 
-package com.wisekiddo.application.module
+package com.wisekiddo.widgets.utils
+
+import android.graphics.Color
+import java.util.*
 
 
-import com.wisekiddo.data.remote.RemoteService
-import com.wisekiddo.feature.popularshows.presenter.MovieShowsPresenter
-import com.wisekiddo.feature.showdetails.presenter.ShowDetailsPresenter
-import dagger.Module
-import dagger.Provides
+object Helper {
 
-@Module(includes = [NetworkModule::class])
-class PresentersModule {
-    @Provides
-    fun getHomePresenter(remoteService: RemoteService) = MovieShowsPresenter(remoteService)
-
-    @Provides
-    fun getShowDetailPresenter(remoteService: RemoteService) = ShowDetailsPresenter(remoteService)
+    fun adjustAlpha(color: Int, factor: Float): Int {
+        val alpha = Math.round(Color.alpha(color) * factor)
+        val red = Color.red(color)
+        val green = Color.green(color)
+        val blue = Color.blue(color)
+        return Color.argb(alpha, red, green, blue)
+    }
 }
+
+fun ClosedRange<Int>.random() =
+    Random().nextInt((endInclusive + 1) - start) + start
+

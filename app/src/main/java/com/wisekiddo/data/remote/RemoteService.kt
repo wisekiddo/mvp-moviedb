@@ -13,24 +13,27 @@
 
 package com.wisekiddo.data.remote
 
-import com.wisekiddo.models.PaginatedResponse
-import com.wisekiddo.models.TvShow
 import com.wisekiddo.data.Constants
+import com.wisekiddo.models.MovieShows
+import com.wisekiddo.models.PaginatedResponse
 import io.reactivex.Flowable
-import io.reactivex.Single
-
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteService {
 
-    @GET(Constants.ApiEndpoint.POPULAR_TV)
+    @GET(Constants.ApiEndpoint.NOW_PLAYING)
     fun getPopularTvShows(@Query(Constants.QueryParams.PAGE) page: Int = 1,
-                          @Query(Constants.QueryParams.API_KEY) apiKey: String = Constants.API_KEY): Flowable<PaginatedResponse<TvShow>>
+                          @Query(Constants.QueryParams.API_KEY)
+                          apiKey: String = Constants.API_KEY
+    ): Flowable<PaginatedResponse<MovieShows>>
 
-    @GET(Constants.ApiEndpoint.SIMILAR_TV)
-    fun getSimilarTvShows(@Path(Constants.PathParams.TV_SHOW_ID) tvShowId: Int,
-                          @Query(Constants.QueryParams.PAGE) page: Int = 1,
-                          @Query(Constants.QueryParams.API_KEY) apiKey: String = Constants.API_KEY): Flowable<PaginatedResponse<TvShow>>
+    @GET(Constants.ApiEndpoint.SIMILAR_MOVIE)
+    fun getSimilarTvShows(
+        @Path(Constants.PathParams.MOVIE_ID) tvShowId: Int,
+        @Query(Constants.QueryParams.PAGE) page: Int = 1,
+        @Query(Constants.QueryParams.API_KEY)
+        apiKey: String = Constants.API_KEY
+    ): Flowable<PaginatedResponse<MovieShows>>
 }
