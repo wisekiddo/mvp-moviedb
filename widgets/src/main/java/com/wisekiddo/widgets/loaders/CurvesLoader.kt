@@ -30,24 +30,19 @@ import java.util.*
 
 class CurvesLoader : LinearLayout, LoaderContract {
 
-    var noOfCurves: Int = 4
+    private var noOfCurves: Int = 4
 
-    var outermostCurveRadius: Int = 100
-    var curveWidth: Int = 10
-    var distanceBetweenCurves: Int = 10
-    var curveSweepAngle: Float = 160.0f
-
-    var curveColor: Int = resources.getColor(android.R.color.holo_red_light)
-
-    var animDuration: Int = 1500
-
-    var interpolator: Interpolator = LinearInterpolator()
-
-    private lateinit var relativeLayout: RelativeLayout
-
+    private var outermostCurveRadius: Int = 100
+    private var curveWidth: Int = 10
+    private var distanceBetweenCurves: Int = 10
+    private var curveSweepAngle: Float = 160.0f
+    private var curveColor: Int = resources.run { getColor(android.R.color.holo_red_light) }
+    private var animDuration: Int = 1500
+    private var interpolator: Interpolator = LinearInterpolator()
     private var calWidthHeight: Int = 0
     private val curvesArray: ArrayList<ArcView> = arrayListOf()
 
+    private lateinit var relativeLayout: RelativeLayout
 
     constructor(context: Context) : super(context) {
         initView()

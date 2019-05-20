@@ -22,18 +22,18 @@ import android.view.View
 
 abstract class CircularSticksAbstractView : View, LoaderContract {
 
-    var noOfSticks: Int = 80
+    private var noOfSticks: Int = 80
 
-    var outerCircleRadius: Float = 200.0f
-    var innerCircleRadius: Float = 100.0f
+    private var outerCircleRadius: Float = 200.0f
+    private var innerCircleRadius: Float = 100.0f
 
-    open var sticksColor: Int = resources.getColor(android.R.color.darker_gray)
-    var viewBackgroundColor: Int = resources.getColor(android.R.color.white)
+    open var sticksColor = resources.getColor(android.R.color.darker_gray)
+    private var viewBackgroundColor: Int = resources.getColor(android.R.color.white)
 
-    protected lateinit var sticksPaint: Paint
-    protected lateinit var innerCirclePaint: Paint
+    private lateinit var sticksPaint: Paint
+    private lateinit var innerCirclePaint: Paint
 
-    protected lateinit var outerCircleOval: RectF
+    private lateinit var outerCircleOval: RectF
 
     constructor(context: Context) : super(context)
 
