@@ -13,4 +13,6 @@ In this project, an Android movie app displaying data sourced from https://www.t
 - Mosby - A Model-View-Presenter and Model-View-Intent library for Android apps.
 
 
+TODO: removing mosby and use custom MVP interfaces
+
 
